@@ -2,18 +2,6 @@ import Testing
 import Foundation
 @testable import QuadTree
 
-struct Coordinate: Identifiable, TwoDimensional {
-    var id: UUID = UUID()
-    var x: Double
-    var y: Double
-}
-
-extension QuadTree<Coordinate> {
-    static func testInstance() -> QuadTree<Coordinate> {
-        QuadTree<Coordinate>(bounds: .init(top: 256, bottom: 0, leading: 0, trailing: 256), capacity: 1)
-    }
-}
-
 struct QuadTreeTests {
     let tree = QuadTree<Coordinate>.testInstance()
     
