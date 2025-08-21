@@ -75,4 +75,17 @@ struct QuadTreeTests {
         #expect(tree.quadrants?.bottomLeading.points == Set([bottomLeading]))
         #expect(tree.quadrants?.bottomTrailing.points == Set([bottomTrailing]))
     }
+    
+    @Test("With a higher node capacity")
+    func higherCapacity() {
+        let tree = QuadTree<Coordinate>(bounds: .init(top: 256, bottom: 0, leading: 0, trailing: 256), capacity: 3)
+        
+        tree.add(.init(x: 10, y: 10))
+        tree.add(.init(x: 20, y: 20))
+        tree.add(.init(x: 30, y: 30))
+        tree.add(.init(x: 40, y: 40))
+        
+        #expect(tree.points.count == 3)
+        #expect(tree.quadrants != nil)
+    }
 }
