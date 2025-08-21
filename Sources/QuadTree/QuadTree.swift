@@ -12,8 +12,8 @@ struct Bounds<DataPoint: TwoDimensional> {
     let trailing: DataPoint.Part
     
     func contains(_ point: DataPoint) -> Bool {
-        point.x > leading && point.x < trailing &&
-        point.y > bottom && point.y < top
+        point.x >= leading && point.x <= trailing &&
+        point.y >= bottom && point.y <= top
     }
     
     func fracture() -> [Bounds<DataPoint>] {
