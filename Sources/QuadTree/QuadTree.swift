@@ -17,11 +17,14 @@ struct Bounds<DataPoint: TwoDimensional> {
     }
     
     func fracture() -> [Bounds<DataPoint>] {
-        [
-            Bounds(top: self.top, bottom: self.bottom / 2, leading: self.leading, trailing: self.trailing / 2),
-            Bounds(top: self.top, bottom: self.bottom / 2, leading: self.leading / 2, trailing: self.trailing),
-            Bounds(top: self.top / 2, bottom: self.bottom, leading: self.leading, trailing: self.trailing / 2),
-            Bounds(top: self.top / 2, bottom: self.bottom, leading: self.leading / 2, trailing: self.trailing),
+        let verticalMidpoint: DataPoint.Part = (self.top + self.bottom) / 2
+        let horizontalMidpoint: DataPoint.Part = (self.leading + self.trailing) / 2
+        
+        return [
+            Bounds(top: self.top, bottom: verticalMidpoint, leading: self.leading, trailing: horizontalMidpoint),
+            Bounds(top: self.top, bottom: verticalMidpoint, leading: horizontalMidpoint, trailing: self.trailing),
+            Bounds(top: verticalMidpoint, bottom: self.bottom, leading: self.leading, trailing: horizontalMidpoint),
+            Bounds(top: verticalMidpoint, bottom: self.bottom, leading: horizontalMidpoint, trailing: self.trailing),
         ]
     }
 }
@@ -44,9 +47,10 @@ class QuadTree<DataPoint: TwoDimensional> {
         self.capacity = capacity
     }
     
-    private var points: Set<DataPoint> = Set([])
-    private var quandrants: Quadrants? = nil
+    var points: Set<DataPoint> = Set([])
+    var quadrants: Quadrants? = nil
     
+    @discardableResult
     func add(_ point: DataPoint) -> Bool {
         guard self.bounds.contains(point) else { return false }
         
@@ -70,19 +74,20 @@ class QuadTree<DataPoint: TwoDimensional> {
     }
     
     private func fracture() -> Quadrants {
-        guard quandrants == nil else {
-            return quandrants!
+        guard quadrants == nil else {
+            return quadrants!
         }
         
         let quadBounds = self.bounds.fracture()
+        print(quadBounds)
         
-        self.quandrants = Quadrants(
+        self.quadrants = Quadrants(
             topLeading: .init(bounds: quadBounds[0], capacity: self.capacity),
             topTrailing: .init(bounds: quadBounds[1], capacity: self.capacity),
             bottomLeading: .init(bounds: quadBounds[2], capacity: self.capacity),
             bottomTrailing: .init(bounds: quadBounds[3], capacity: self.capacity)
         )
         
-        return self.quandrants!
+        return self.quadrants!
     }
 }
