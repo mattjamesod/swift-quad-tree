@@ -39,8 +39,25 @@ class QuadTree<DataPoint: TwoDimensional> {
         fatalError()
     }
     
-    public func search(in rect: Bounds<DataPoint>) -> Set<DataPoint> {
-        Set([])
+    public func search(in searchArea: Bounds<DataPoint>) -> Set<DataPoint> {
+        var result = Set<DataPoint>()
+        
+        guard searchArea.intersects(self.bounds) else { return result }
+        
+        for point in points {
+            if searchArea.contains(point) {
+                result.insert(point)
+            }
+        }
+        
+        if let quadrants {
+            result.formUnion(quadrants.topLeading.search(in: searchArea))
+            result.formUnion(quadrants.topTrailing.search(in: searchArea))
+            result.formUnion(quadrants.bottomLeading.search(in: searchArea))
+            result.formUnion(quadrants.bottomTrailing.search(in: searchArea))
+        }
+        
+        return result
     }
     
     private func fracture() -> Quadrants {
