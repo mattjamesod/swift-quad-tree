@@ -1,5 +1,5 @@
 
-class QuadTree<DataPoint: TwoDimensional> {
+public class QuadTree<DataPoint: TwoDimensional> {
     struct Quadrants {
         let topLeading: QuadTree<DataPoint>
         let topTrailing: QuadTree<DataPoint>
