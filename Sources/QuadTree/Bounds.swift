@@ -1,9 +1,16 @@
 
-struct Bounds<DataPoint: TwoDimensional> {
+public struct Bounds<DataPoint: TwoDimensional> {
     let top: DataPoint.Part
     let bottom: DataPoint.Part
     let leading: DataPoint.Part
     let trailing: DataPoint.Part
+    
+    public init(top: DataPoint.Part, bottom: DataPoint.Part, leading: DataPoint.Part, trailing: DataPoint.Part) {
+        self.top = top
+        self.bottom = bottom
+        self.leading = leading
+        self.trailing = trailing
+    }
     
     func contains(_ point: DataPoint) -> Bool {
         point.x >= leading && point.x <= trailing &&
