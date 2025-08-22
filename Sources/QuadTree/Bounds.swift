@@ -11,8 +11,8 @@ struct Bounds<DataPoint: TwoDimensional> {
     }
     
     func intersects(_ bounds: Bounds<DataPoint>) -> Bool {
-        max(self.trailing, bounds.trailing) < min(self.leading, bounds.leading) &&
-        max(self.bottom, bounds.bottom) < min(self.top, bounds.top)
+        max(self.leading, bounds.leading) <= min(self.trailing, bounds.trailing) &&
+        max(self.bottom, bounds.bottom) <= min(self.top, bounds.top)
     }
     
     func fracture() -> [Bounds<DataPoint>] {
