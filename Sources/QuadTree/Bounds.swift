@@ -34,3 +34,7 @@ public struct Bounds<DataPoint: TwoDimensional> {
         ]
     }
 }
+
+extension Bounds: Hashable where DataPoint: Hashable {
+    
+}
