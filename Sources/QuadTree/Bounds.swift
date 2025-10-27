@@ -1,9 +1,9 @@
 
 public struct Bounds<DataPoint: TwoDimensional> {
-    let top: DataPoint.Part
-    let bottom: DataPoint.Part
-    let leading: DataPoint.Part
-    let trailing: DataPoint.Part
+    public let top: DataPoint.Part
+    public let bottom: DataPoint.Part
+    public let leading: DataPoint.Part
+    public let trailing: DataPoint.Part
     
     public init(top: DataPoint.Part, bottom: DataPoint.Part, leading: DataPoint.Part, trailing: DataPoint.Part) {
         self.top = top
