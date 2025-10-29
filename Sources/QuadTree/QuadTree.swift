@@ -22,7 +22,7 @@ public class QuadTree<DataPoint: TwoDimensional> {
     
     @discardableResult
     public func add(_ point: DataPoint) -> Bool {
-        guard self.bounds.contains(point) else { return false }
+        guard self.bounds.contains(point) else { print("Point being added was not in map bounds: \(point.x), \(point.y)"); return false }
         
         if self.points.count < self.capacity {
             self.points.insert(point)
